@@ -1,0 +1,236 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+<title>客户资料添加</title>
+<link href="{% static 'plugins/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'plugins/bootstrap-dashen.css' %}" rel="stylesheet">
+<link href="{% static 'plugins/font-awesome.css' %}" rel="stylesheet">
+<link href="{% static 'plugins/animate.css' %}" rel="stylesheet">
+<link href="{% static 'plugins/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen">
+</head>
+<body style="margin-top:70px;">
+{% include 'header.html' %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 wow fadeInUp" data-wow-duration="0.5s">
+			<div>
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+			    	<li role="presentation" ><a href="{% url 'Ziliao:frontList' %}">客户资料列表</a></li>
+			    	<li role="presentation" class="active"><a href="#ziliaoAdd" aria-controls="ziliaoAdd" role="tab" data-toggle="tab">添加客户资料</a></li>
+				</ul>
+				<!-- Tab panes -->
+				<div class="tab-content">
+				    <div role="tabpanel" class="tab-pane" id="ziliaoList">
+				    </div>
+				    <div role="tabpanel" class="tab-pane active" id="ziliaoAdd"> 
+				      	<form class="form-horizontal" name="ziliaoAddForm" id="ziliaoAddForm" enctype="multipart/form-data" method="post"  class="mar_t15">
+				    {% csrf_token %}
+						  <div class="form-group">
+						  	 <label for="ziliao_ziliaoName" class="col-md-2 text-right">资料名称:</label>
+						  	 <div class="col-md-8">
+							    <input type="text" id="ziliao_ziliaoName" name="ziliao.ziliaoName" class="form-control" placeholder="请输入资料名称">
+							 </div>
+						  </div>
+						  <div class="form-group">
+						  	 <label for="ziliao_ziliaoFile" class="col-md-2 text-right">资料文件:</label>
+						  	 <div class="col-md-8">
+									    <input id="ziliao_ziliaoFile" name="ziliao.ziliaoFile" type="file" size="50" />
+						  	 </div>
+						  </div>
+						  <div class="form-group" style="display:none;">
+						  	 <label for="ziliao_userObj_user_name" class="col-md-2 text-right">上传客户:</label>
+						  	 <div class="col-md-8">
+							    <select id="ziliao_userObj_user_name" name="ziliao.userObj.user_name" class="form-control">
+                            {% for userInfo in userInfos %}
+                            <option value="{{ userInfo.user_name }}">{{ userInfo.name }}</option>
+                            {% endfor %}
+							    </select>
+						  	 </div>
+						  </div>
+						  <div class="form-group" style="display:none;">
+						  	 <label for="ziliao_upTimeDiv" class="col-md-2 text-right">上传时间:</label>
+						  	 <div class="col-md-8">
+				                <div id="ziliao_upTimeDiv" class="input-group date ziliao_upTime col-md-12" data-link-field="ziliao_upTime">
+				                    <input class="form-control" id="ziliao_upTime" name="ziliao.upTime" size="16" type="text" value="" placeholder="请选择上传时间" readonly>
+				                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+				                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				                </div>
+						  	 </div>
+						  </div>
+						  <div class="form-group" style="display:none;">
+						  	 <label for="ziliao_shenHeState" class="col-md-2 text-right">审核状态:</label>
+						  	 <div class="col-md-8">
+							    <input type="text" id="ziliao_shenHeState" name="ziliao.shenHeState" value="待审核" class="form-control" placeholder="请输入审核状态">
+							 </div>
+						  </div>
+						  <div class="form-group" style="display:none;">
+						  	 <label for="ziliao_shenHeRen" class="col-md-2 text-right">审核人:</label>
+						  	 <div class="col-md-8">
+							    <input type="text" id="ziliao_shenHeRen" name="ziliao.shenHeRen" value="--" class="form-control" placeholder="请输入审核人">
+							 </div>
+						  </div>
+						  <div class="form-group" style="display:none;">
+						  	 <label for="ziliao_shenHeTimeDiv" class="col-md-2 text-right">审核时间:</label>
+						  	 <div class="col-md-8">
+				                <div id="ziliao_shenHeTimeDiv" class="input-group date ziliao_shenHeTime col-md-12" data-link-field="ziliao_shenHeTime">
+				                    <input class="form-control" id="ziliao_shenHeTime" name="ziliao.shenHeTime" size="16" type="text" value="" placeholder="请选择审核时间" readonly>
+				                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+				                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				                </div>
+						  	 </div>
+						  </div>
+						  <div class="form-group" style="display:none;">
+						  	 <label for="ziliao_xyjf" class="col-md-2 text-right">信用积分:</label>
+						  	 <div class="col-md-8">
+							    <input type="text" id="ziliao_xyjf" name="ziliao.xyjf" value="0" class="form-control" placeholder="请输入信用积分">
+							 </div>
+						  </div>
+				          <div class="form-group">
+				             <span class="col-md-2""></span>
+				             <span onclick="ajaxZiliaoAdd();" class="btn btn-primary bottom5 top5">上传资料</span>
+				          </div>
+						</form> 
+				        <style>#ziliaoAddForm .form-group {margin:10px;}  </style>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> 
+</div>
+
+{% include 'footer.html' %}
+<script src="{% static 'plugins/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap.js' %}"></script>
+<script src="{% static 'plugins/wow.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrapvalidator/js/bootstrapValidator.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'plugins/bootstrap-datetimepicker.min.js' %}" charset="UTF-8"></script>
+<script type="text/javascript" src="{% static 'plugins/locales/bootstrap-datetimepicker.zh-CN.js' %}" charset="UTF-8"></script>
+<script>
+	//提交添加客户资料信息
+	function ajaxZiliaoAdd() { 
+		//提交之前先验证表单
+		$("#ziliaoAddForm").data('bootstrapValidator').validate();
+		if(!$("#ziliaoAddForm").data('bootstrapValidator').isValid()){
+			return;
+		}
+		jQuery.ajax({
+			type : "post",
+			url : "{% url 'Ziliao:frontAdd' %}",
+			dataType : "json" , 
+			data: new FormData($("#ziliaoAddForm")[0]),
+			success : function(obj) {
+				if(obj.success){ 
+					alert("保存成功！");
+					location.reload();
+				} else {
+					alert(obj.message);
+				}
+			},
+			processData: false, 
+			contentType: false, 
+		});
+	} 
+$(function(){
+	/*小屏幕导航点击关闭菜单*/
+    $('.navbar-collapse a').click(function(){
+        $('.navbar-collapse').collapse('hide');
+    });
+    new WOW().init();
+	//验证客户资料添加表单字段
+	$('#ziliaoAddForm').bootstrapValidator({
+		feedbackIcons: {
+			valid: 'glyphicon glyphicon-ok',
+			invalid: 'glyphicon glyphicon-remove',
+			validating: 'glyphicon glyphicon-refresh'
+		},
+		fields: {
+			"ziliao.ziliaoName": {
+				validators: {
+					notEmpty: {
+						message: "资料名称不能为空",
+					}
+				}
+			},
+            /*
+			"ziliao.upTime": {
+				validators: {
+					notEmpty: {
+						message: "上传时间不能为空",
+					}
+				}
+			},
+			*/
+			"ziliao.shenHeState": {
+				validators: {
+					notEmpty: {
+						message: "审核状态不能为空",
+					}
+				}
+			},
+			"ziliao.shenHeRen": {
+				validators: {
+					notEmpty: {
+						message: "审核人不能为空",
+					}
+				}
+			},
+            /*
+			"ziliao.shenHeTime": {
+				validators: {
+					notEmpty: {
+						message: "审核时间不能为空",
+					}
+				}
+			},
+			*/
+			"ziliao.xyjf": {
+				validators: {
+					notEmpty: {
+						message: "信用积分不能为空",
+					},
+					numeric: {
+						message: "信用积分不正确"
+					}
+				}
+			},
+		}
+	}); 
+	//上传时间组件
+	$('#ziliao_upTimeDiv').datetimepicker({
+		language:  'zh-CN',  //显示语言
+		format: 'yyyy-mm-dd hh:ii:ss',
+		weekStart: 1,
+		todayBtn:  1,
+		autoclose: 1,
+		minuteStep: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0
+	}).on('hide',function(e) {
+		//下面这行代码解决日期组件改变日期后不验证的问题
+		$('#ziliaoAddForm').data('bootstrapValidator').updateStatus('ziliao.upTime', 'NOT_VALIDATED',null).validateField('ziliao.upTime');
+	});
+	//审核时间组件
+	$('#ziliao_shenHeTimeDiv').datetimepicker({
+		language:  'zh-CN',  //显示语言
+		format: 'yyyy-mm-dd hh:ii:ss',
+		weekStart: 1,
+		todayBtn:  1,
+		autoclose: 1,
+		minuteStep: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0
+	}).on('hide',function(e) {
+		//下面这行代码解决日期组件改变日期后不验证的问题
+		$('#ziliaoAddForm').data('bootstrapValidator').updateStatus('ziliao.shenHeTime', 'NOT_VALIDATED',null).validateField('ziliao.shenHeTime');
+	});
+})
+</script>
+</body>
+</html>

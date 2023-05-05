@@ -1,0 +1,78 @@
+{% include 'check_logstate.html' %}
+{% load staticfiles %}
+
+ <link rel="stylesheet" type="text/css" href="{% static 'css/ziliao.css' %}" />
+<div id="ziliaoAddDiv">
+    {% csrf_token %}
+	<form id="ziliaoAddForm" enctype="multipart/form-data"  method="post">
+		<div>
+			<span class="label">资料名称:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="ziliao_ziliaoName" name="ziliao.ziliaoName" style="width:200px" />
+
+			</span>
+
+		</div>
+		<div>
+			<span class="label">资料文件:</span>
+			<span class="inputControl">
+				<input id="ziliao_ziliaoFile" name="ziliao.ziliaoFile" type="file" size="50" />
+			</span>
+		</div>
+		<div>
+			<span class="label">上传客户:</span>
+			<span class="inputControl">
+                <select id="ziliao_userObj_user_name" name="ziliao.userObj.user_name" style="width:200px;height:25px;">
+                    {% for userInfo in userInfos %}
+                    <option value="{{ userInfo.user_name }}">{{ userInfo.name }}</option>
+                    {% endfor %}
+                </select>
+			</span>
+		</div>
+		<div>
+			<span class="label">上传时间:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="ziliao_upTime" name="ziliao.upTime" />
+
+			</span>
+
+		</div>
+		<div>
+			<span class="label">审核状态:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="ziliao_shenHeState" name="ziliao.shenHeState" style="width:200px" />
+
+			</span>
+
+		</div>
+		<div>
+			<span class="label">审核人:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="ziliao_shenHeRen" name="ziliao.shenHeRen" style="width:200px" />
+
+			</span>
+
+		</div>
+		<div>
+			<span class="label">审核时间:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="ziliao_shenHeTime" name="ziliao.shenHeTime" />
+
+			</span>
+
+		</div>
+		<div>
+			<span class="label">信用积分:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="ziliao_xyjf" name="ziliao.xyjf" style="width:80px" />
+
+			</span>
+
+		</div>
+		<div class="operation">
+			<a id="ziliaoAddButton" class="easyui-linkbutton">添加</a>
+			<a id="ziliaoClearButton" class="easyui-linkbutton">重填</a>
+		</div> 
+	</form>
+</div>
+<script src="{% static 'js/Ziliao/ziliao_add.js' %}"></script>

@@ -1,0 +1,201 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+  <TITLE>修改客户资料信息</TITLE>
+  <link href="{% static 'plugins/bootstrap.css' %}" rel="stylesheet">
+  <link href="{% static 'plugins/bootstrap-dashen.css' %}" rel="stylesheet">
+  <link href="{% static 'plugins/font-awesome.css' %}" rel="stylesheet">
+  <link href="{% static 'plugins/animate.css' %}" rel="stylesheet">
+</head>
+<body style="margin-top:70px;"> 
+<div class="container">
+    {% include 'header.html' %}
+	<div class="col-md-9 wow fadeInLeft">
+	<ul class="breadcrumb">
+  		<li><a href="{% url 'Index:index' %}">首页</a></li>
+  		<li class="active">客户资料信息修改</li>
+	</ul>
+		<div class="row"> 
+      	<form class="form-horizontal" name="ziliaoEditForm" id="ziliaoEditForm" enctype="multipart/form-data" method="post"  class="mar_t15">
+            {% csrf_token %}
+		  <div class="form-group">
+			 <label for="ziliao_ziliaoId_edit" class="col-md-3 text-right">资料编号:</label>
+			 <div class="col-md-9"> 
+			 	<input type="text" id="ziliao_ziliaoId_edit" name="ziliao.ziliaoId" class="form-control" placeholder="请输入资料编号" readOnly>
+			 </div>
+		  </div> 
+		  <div class="form-group">
+		  	 <label for="ziliao_ziliaoName_edit" class="col-md-3 text-right">资料名称:</label>
+		  	 <div class="col-md-9">
+			    <input type="text" id="ziliao_ziliaoName_edit" name="ziliao.ziliaoName" class="form-control" placeholder="请输入资料名称">
+			 </div>
+		  </div>
+		  <div class="form-group">
+		  	 <label for="ziliao_ziliaoFile_edit" class="col-md-3 text-right">资料文件:</label>
+		  	 <div class="col-md-9">
+			    <a id="ziliao_ziliaoFileA" width="200px" border="0px"></a><br/>
+			    <input id="ziliao.ziliaoFile" name="ziliao.ziliaoFile" type="file" size="50" />
+		  	 </div>
+		  </div>
+		  <div class="form-group">
+		  	 <label for="ziliao_userObj_user_name_edit" class="col-md-3 text-right">上传客户:</label>
+		  	 <div class="col-md-9">
+			    <select id="ziliao_userObj_user_name_edit" name="ziliao.userObj.user_name" class="form-control">
+			    </select>
+		  	 </div>
+		  </div>
+		  <div class="form-group">
+		  	 <label for="ziliao_upTime_edit" class="col-md-3 text-right">上传时间:</label>
+		  	 <div class="col-md-9">
+                <div class="input-group date ziliao_upTime_edit col-md-12" data-link-field="ziliao_upTime_edit">
+                    <input class="form-control" id="ziliao_upTime_edit" name="ziliao.upTime" size="16" type="text" value="" placeholder="请选择上传时间" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+		  	 </div>
+		  </div>
+		  <div class="form-group">
+		  	 <label for="ziliao_shenHeState_edit" class="col-md-3 text-right">审核状态:</label>
+		  	 <div class="col-md-9">
+			    <input type="text" id="ziliao_shenHeState_edit" name="ziliao.shenHeState" class="form-control" placeholder="请输入审核状态">
+			 </div>
+		  </div>
+		  <div class="form-group">
+		  	 <label for="ziliao_shenHeRen_edit" class="col-md-3 text-right">审核人:</label>
+		  	 <div class="col-md-9">
+			    <input type="text" id="ziliao_shenHeRen_edit" name="ziliao.shenHeRen" class="form-control" placeholder="请输入审核人">
+			 </div>
+		  </div>
+		  <div class="form-group">
+		  	 <label for="ziliao_shenHeTime_edit" class="col-md-3 text-right">审核时间:</label>
+		  	 <div class="col-md-9">
+                <div class="input-group date ziliao_shenHeTime_edit col-md-12" data-link-field="ziliao_shenHeTime_edit">
+                    <input class="form-control" id="ziliao_shenHeTime_edit" name="ziliao.shenHeTime" size="16" type="text" value="" placeholder="请选择审核时间" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+		  	 </div>
+		  </div>
+		  <div class="form-group">
+		  	 <label for="ziliao_xyjf_edit" class="col-md-3 text-right">信用积分:</label>
+		  	 <div class="col-md-9">
+			    <input type="text" id="ziliao_xyjf_edit" name="ziliao.xyjf" class="form-control" placeholder="请输入信用积分">
+			 </div>
+		  </div>
+			  <div class="form-group">
+			  	<span class="col-md-3""></span>
+			  	<span onclick="ajaxZiliaoModify();" class="btn btn-primary bottom5 top5">修改</span>
+			  </div>
+		</form> 
+	    <style>#ziliaoEditForm .form-group {margin-bottom:5px;}  </style>
+      </div>
+   </div>
+</div>
+
+
+{% include 'footer.html' %}
+<script src="{% static 'plugins/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap.js' %}"></script>
+<script src="{% static 'plugins/wow.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-datetimepicker.min.js' %}"></script>
+<script src="{% static 'plugins/locales/bootstrap-datetimepicker.zh-CN.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jsdate.js' %}"></script>
+<script>
+/*弹出修改客户资料界面并初始化数据*/
+ function ajaxModifyQuery(ziliaoId) {
+	$.ajax({
+		url :  "/Ziliao/update/" + ziliaoId,
+		type : "get",
+		dataType: "json",
+		success : function (ziliao, response, status) {
+			if (ziliao) {
+				$("#ziliao_ziliaoId_edit").val(ziliao.ziliaoId);
+				$("#ziliao_ziliaoName_edit").val(ziliao.ziliaoName);
+				$("#ziliao_ziliaoFileA").text(decodeURIComponent(ziliao.ziliaoFile.substring(12)));
+				$("#ziliao_ziliaoFileA").attr("href", ziliao.ziliaoFile);
+				$.ajax({
+					url: "/UserInfo/listAll?csrfmiddlewaretoken=" + $('input[name="csrfmiddlewaretoken"]').val(),
+					type: "get",
+					success: function(userInfos,response,status) { 
+						$("#ziliao_userObj_user_name_edit").empty();
+						var html="";
+		        		$(userInfos).each(function(i,userInfo){
+		        			html += "<option value='" + userInfo.user_name + "'>" + userInfo.name + "</option>";
+		        		});
+		        		$("#ziliao_userObj_user_name_edit").html(html);
+		        		$("#ziliao_userObj_user_name_edit").val(ziliao.userObjPri);
+					}
+				});
+				$("#ziliao_upTime_edit").val(ziliao.upTime);
+				$("#ziliao_shenHeState_edit").val(ziliao.shenHeState);
+				$("#ziliao_shenHeRen_edit").val(ziliao.shenHeRen);
+				$("#ziliao_shenHeTime_edit").val(ziliao.shenHeTime);
+				$("#ziliao_xyjf_edit").val(ziliao.xyjf);
+			} else {
+				alert("获取信息失败！");
+			}
+		}
+	});
+}
+
+/*ajax方式提交客户资料信息表单给服务器端修改*/
+function ajaxZiliaoModify() {
+	$.ajax({
+		url :  "/Ziliao/update/" + $("#ziliao_ziliaoId_edit").val(),
+		type : "post",
+		dataType: "json",
+		data: new FormData($("#ziliaoEditForm")[0]),
+		success : function (obj, response, status) {
+            if(obj.success){
+                alert("信息修改成功！");
+                location.reload(true);
+                $("#ziliaoQueryForm").submit();
+            }else{
+                alert(obj.message);
+            } 
+		},
+		processData: false,
+		contentType: false,
+	});
+}
+
+$(function(){
+        /*小屏幕导航点击关闭菜单*/
+        $('.navbar-collapse a').click(function(){
+            $('.navbar-collapse').collapse('hide');
+        });
+        new WOW().init();
+    /*上传时间组件*/
+    $('.ziliao_upTime_edit').datetimepicker({
+    	language:  'zh-CN',  //语言
+    	format: 'yyyy-mm-dd hh:ii:ss',
+    	weekStart: 1,
+    	todayBtn:  1,
+    	autoclose: 1,
+    	minuteStep: 1,
+    	todayHighlight: 1,
+    	startView: 2,
+    	forceParse: 0
+    });
+    /*审核时间组件*/
+    $('.ziliao_shenHeTime_edit').datetimepicker({
+    	language:  'zh-CN',  //语言
+    	format: 'yyyy-mm-dd hh:ii:ss',
+    	weekStart: 1,
+    	todayBtn:  1,
+    	autoclose: 1,
+    	minuteStep: 1,
+    	todayHighlight: 1,
+    	startView: 2,
+    	forceParse: 0
+    });
+    setTimeout(ajaxModifyQuery,100,"{{ ziliaoId }}");
+ })
+ </script> 
+</body>
+</html>
+

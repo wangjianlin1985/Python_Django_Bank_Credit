@@ -1,0 +1,104 @@
+{% include 'check_logstate.html' %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/ziliao.css' %}" />
+
+{% csrf_token %}
+<div id="ziliao_manage"></div>
+<div id="ziliao_manage_tool" style="padding:5px;">
+	<div style="margin-bottom:5px;">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit-new" plain="true" onclick="ziliao_manage_tool.edit();">审核</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-delete-new" plain="true" onclick="ziliao_manage_tool.remove();">删除</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-reload" plain="true"  onclick="ziliao_manage_tool.reload();">刷新</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain="true" onclick="ziliao_manage_tool.redo();">取消选择</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-export" plain="true" onclick="ziliao_manage_tool.exportExcel();">导出到excel</a>
+	</div>
+	<div style="padding:0 0 0 7px;color:#333;">
+		<form id="ziliaoQueryForm" method="get">
+			资料名称：<input type="text" class="textbox" id="ziliaoName" name="ziliaoName" style="width:110px" />
+			上传客户：<input class="textbox" type="text" id="userObj_user_name_query" name="userObj.user_name" style="width: auto"/>
+			上传时间：<input type="text" id="upTime" name="upTime" class="easyui-datebox" editable="false" style="width:100px">
+			审核状态：<input type="text" class="textbox" id="shenHeState" name="shenHeState" style="width:110px" />
+			审核人：<input type="text" class="textbox" id="shenHeRen" name="shenHeRen" style="width:110px" />
+			审核时间：<input type="text" id="shenHeTime" name="shenHeTime" class="easyui-datebox" editable="false" style="width:100px">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="ziliao_manage_tool.search();">查询</a>
+		</form>	
+	</div>
+</div>
+
+<div id="ziliaoEditDiv">
+	<form id="ziliaoEditForm" enctype="multipart/form-data"  method="post">
+        {% csrf_token %}
+		<div>
+			<span class="label">资料编号:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="ziliao_ziliaoId_edit" name="ziliao.ziliaoId" style="width:200px" />
+			</span>
+		</div>
+		<div>
+			<span class="label">资料名称:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="ziliao_ziliaoName_edit" name="ziliao.ziliaoName" style="width:200px" />
+
+			</span>
+
+		</div>
+		<div>
+			<span class="label">资料文件:</span>
+			<span class="inputControl">
+				<a id="book_bookFileA" style="color:red;margin-bottom:5px;" target="_blank">查看</a>
+    			<input type="hidden" id="ziliao_ziliaoFile" name="ziliao.ziliaoFile"/>
+				<input id="ziliao_ziliaoFile" name="ziliao.ziliaoFile" value="重新选择文件" type="file" size="50" />
+			</span>
+		</div>
+		<div>
+			<span class="label">上传客户:</span>
+			<span class="inputControl">
+				<input class="textbox"  id="ziliao_userObj_user_name_edit" name="ziliao.userObj.user_name" style="width: auto"/>
+			</span>
+		</div>
+		<div>
+			<span class="label">上传时间:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="ziliao_upTime_edit" name="ziliao.upTime" />
+
+			</span>
+
+		</div>
+		<div>
+			<span class="label">审核状态:</span>
+			<span class="inputControl">
+                <select id="ziliao_shenHeState_edit" name="ziliao.shenHeState">
+                    <option value="审核拒绝">审核拒绝</option>
+                    <option value="审核通过">审核通过</option>
+                </select>
+
+			</span>
+
+		</div>
+		<div style="display:none;">
+			<span class="label">审核人:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="ziliao_shenHeRen_edit" name="ziliao.shenHeRen" style="width:200px" />
+
+			</span>
+
+		</div>
+		<div style="display:none;">
+			<span class="label">审核时间:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="ziliao_shenHeTime_edit" name="ziliao.shenHeTime" />
+
+			</span>
+
+		</div>
+		<div>
+			<span class="label">信用积分:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="ziliao_xyjf_edit" name="ziliao.xyjf" style="width:80px" />
+
+			</span>
+
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="{% static 'js/Ziliao/ziliao_manage.js' %}"></script>
